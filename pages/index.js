@@ -2,14 +2,16 @@ import Head from "next/head";
 import { useState, useCallback, useEffect } from "react";
 import TextInput from "./components/TextInput";
 import Editor from "./components/Editor";
+import Form from "./components/Form";
+
 
 export default function Home() {
   const [result, setResult] = useState("// type a text prompt above and click 'Generate content'");
   const [textInput, setTextInput] = useState("");
   const [waiting, setWaiting] = useState(false);
-  const [sandboxRunning, setSandboxRunning] = useState(false);
   const [logMsg, setlogMsg] = useState("");
-  const [selVal, setSelVal] = useState("");
+  const [selGoal, setSelGoal] = useState("");
+  const [selTone, setSelTone] = useState("");
 
   const contentLengthArray = [
     {
@@ -19,6 +21,17 @@ export default function Home() {
     {
       value: "90 Characters Description",
       length: "90"
+    }
+  ]
+
+  const toneTypeArray = [
+    {
+      value: "friendly",
+      length: "friendly"
+    },
+    {
+      value: "excited",
+      length: "excited"
     }
   ]
 
@@ -39,7 +52,7 @@ export default function Home() {
 
     // clean up
     return () => window.removeEventListener("message", handler)
-  }, [result, sandboxRunning])
+  }, [result])
 
   function textInputChange(event) {
     event.preventDefault();
@@ -51,14 +64,14 @@ export default function Home() {
     setlogMsg("");
     setWaiting(true);
     setResult("// Please be patient, this may take a while...");
-    setSelVal("");
+    setSelGoal("");
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: textInput, promptType: selVal }),
+        body: JSON.stringify({ prompt: textInput, promptType: selGoal, promptTone: selTone }),
       });
 
       const data = await response.json();
@@ -67,7 +80,6 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
       setResult(data.code);
-      setSandboxRunning(true);
       setWaiting(false);
     } catch(error) {
       console.error(error);
@@ -82,31 +94,32 @@ export default function Home() {
   
   function runClickPlay(event) {
     event.preventDefault();
-    setSandboxRunning(true);
   }
 
   function runClickStop(event) {
     event.preventDefault();
-    setSandboxRunning(false);
     setlogMsg("");
   }
 
-  function textSelectChange(event) {
-    setSelVal(event.target.value);
+  function goalSelectChange(event) {
+    setSelGoal(event.target.value);
     event.preventDefault();
     const search = event.target.value;
-    const selectedEg = egArray.find((obj) => obj.value === search);
+    const selectedEg = contentLengthArray.find((obj) => obj.value === search);
     if(selectedEg) {
       setlogMsg('');
       setTextInput(selectedEg.prompt);
       setResult(selectedEg.code);
-      setSandboxRunning(true);
     } else {
       setlogMsg('');
       setTextInput('');
       setResult('');
-      setSandboxRunning(false);
     }
+  }
+
+  function toneSelectChange(event) {
+    setSelTone(event.target.value);
+    event.preventDefault();
   }
 
   return (
@@ -130,7 +143,8 @@ export default function Home() {
         </header>
         <div className="flex flex-col gap-4 2xl:flex-row w-full">
           <div className="flex flex-col gap-4 2xl:w-1/2">
-            <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting} selectVal={selVal} selectChange={textSelectChange} egArray={contentLengthArray}/>
+            <Form key="form-01" selectGoal={selGoal} goalSelectChange={goalSelectChange} egArray={contentLengthArray} selectTone={selTone} toneSelectChange={toneSelectChange} toneTypeArray={toneTypeArray}/>
+            <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting}/>
             <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
           </div>
         </div>

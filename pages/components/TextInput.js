@@ -3,19 +3,6 @@ export default function TextInput({textInput, onChange, onSubmit, waiting, selec
       <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
         <div className="flex justify-between xs:mb-2">
           <h3 className="font-semibold text-gray-500">Text prompt</h3>
-          <select 
-            name="examples" 
-            id="eg-select" 
-            value={selectVal}
-            className="bg-emerald-100 rounded text-sm px-1 text-gray-600"
-            onChange={selectChange}
-            >
-              <option value="">Choose a content type</option>
-              {egArray?.map((eg, index) => {
-                  return <option value={eg.value} key={index}>{eg.value}</option>
-                }
-              )}
-          </select>
         </div>
         <form onSubmit={onSubmit} className="w-full">
           <textarea key="textarea-01" className="block min-h-[50px] xs:min-h-[70px] border-[1.5px] border-emerald-500 p-2 rounded w-full mb-2 text-sm
