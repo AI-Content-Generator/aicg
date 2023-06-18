@@ -44,6 +44,7 @@ export default async function (req, res) {
   const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/text2img"
   const prompt = req.body.prompt || '';
   const promptType = req.body.promptType
+  const promptTone = req.body.promptTone
   if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -55,6 +56,7 @@ export default async function (req, res) {
 
   console.log('User prompt in generateImage:', prompt);
   console.log('User prompt type in generateImage:', promptType);
+  console.log('User prompt tone in generateImage:', promptTone);
 
   try {
   var raw = JSON.stringify({

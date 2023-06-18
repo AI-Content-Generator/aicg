@@ -47,7 +47,8 @@ export default async function (req, res) {
   }
 
   const prompt = req.body.prompt || '';
-  const promptType = req.body.promptType
+  let promptType = req.body.promptType
+  let promptTone = req.body.promptTone
   if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -57,13 +58,20 @@ export default async function (req, res) {
     return;
   }
 
+  if (promptType === "") {
+    promptType = "30 Characters Headline"
+  }
+
+  if (promptTone === "") {
+    promptTone = "friendly"
+  }
+
   console.log('User prompt:', prompt);
   console.log('User prompt type:', promptType);
+  console.log('User prompt tone:', promptTone);
   
-  let query = `Do not explain, answer only. You are converting user text input into a Google Ad description in 90 characters. This is the user text input: ${prompt}`
-  if (String(promptType).startsWith('30')) {
-    query = `Do not explain, answer only. You are converting user text input into a Google Ad title in 30 characters. This is the user text input: ${prompt}`
-  }
+  
+  let query = `Do not explain, answer only in ${promptTone} tone. You are converting user text input into a Google Ad ${promptType}. This is the user text input: ${prompt}`
 
 
   try {
