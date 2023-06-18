@@ -39,7 +39,7 @@ export default function Home() {
     let ranOnce = false;
 
     const handler = event => {
-      const data = JSON.parse(event.data)
+      const data = event.data
       if (!ranOnce) {
         setlogMsg(data.logMsg);
         ranOnce = true;
