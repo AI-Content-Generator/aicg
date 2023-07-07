@@ -1,51 +1,11 @@
-// class ImageAttribute {
-//   constructor(
-//     key = "N7zj5rArj65fYFXdDYFsq24Qu1eq4DwmmCrrGZZW7mO7ZrcWgqZlpucBr9Aq",
-//     prompt = null,
-//     negative_prompt = null,
-//     width = "512",
-//     height = "512",
-//     samples = "1",
-//     num_inference_steps = "20",
-//     seed = null,
-//     guidance_scale = 7.5,
-//     safety_checker = "yes",
-//     enhance_prompt = "yes",
-//     multi_lingual = "no",
-//     panorama = "no",
-//     self_attention = "no",
-//     upscale = "no",
-//     embeddings_model = "embeddings_model_id",
-//     webhook = null,
-//     track_id = null
-//   ) {
-//     this.key = key;
-//     this.prompt = prompt;
-//     this.negative_prompt = negative_prompt;
-//     this.width = width;
-//     this.height = height;
-//     this.samples = samples;
-//     this.num_inference_steps = num_inference_steps;
-//     this.seed = seed;
-//     this.guidance_scale = guidance_scale;
-//     this.safety_checker = safety_checker;
-//     this.enhance_prompt = enhance_prompt;
-//     this.multi_lingual = multi_lingual;
-//     this.panorama = panorama;
-//     this.self_attention = self_attention;
-//     this.upscale = upscale;
-//     this.embeddings_model = embeddings_model;
-//     this.webhook = webhook;
-//     this.track_id = track_id;
-//   }
-// }
 
 export default async function (req, res) {
-  const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/text2img"
+  const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/inpaint"
   const prompt = req.body.prompt || '';
   const promptType = req.body.promptType
   const promptTone = req.body.promptTone
   const keyword = req.body.keyword
+  const mask = req.body.mask
   if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -58,10 +18,13 @@ export default async function (req, res) {
   console.log('User prompt in generateImage:', prompt);
   console.log('User prompt type in generateImage:', promptType);
   console.log('User prompt tone in generateImage:', promptTone);
+  console.log('User prompt keyword:', keyword);
+  console.log('User prompt mask:', mask);
+
 
   try {
   var raw = JSON.stringify({
-      "key": process.env.STABLE_DIFFUSION_KEY,
+      "key": "bSq1iiXf0iGczD38jmCvEVSwZM4LL9yXVmA8Ijdw2Nv4gFGuptBRW2b0PzFq",
       "prompt": prompt,
       "negative_prompt": null,
       "width": "512",
@@ -77,7 +40,9 @@ export default async function (req, res) {
       "upscale": "no",
       "embeddings_model": "embeddings_model_id",
       "webhook": null,
-      "track_id": null
+      "track_id": null,
+      "init_image": keyword,
+      "mask_image": mask
     });
 
     const myHeaders = {
