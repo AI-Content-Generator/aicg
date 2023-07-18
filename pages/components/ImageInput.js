@@ -9,6 +9,9 @@ export default function ImageInput() {
   const [logMsg, setlogMsg] = useState("");
   const [selGoal, setSelGoal] = useState("");
   const [selTone, setSelTone] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [mask, setMask] = useState("");
+
 
   const contentLengthArray = [
     {
@@ -43,13 +46,19 @@ export default function ImageInput() {
     setWaiting(true);
     setImageResult("// Please be patient, this may take a while...");
     setSelGoal("");
+    let apiEndpoint
+    if (mask.length > 0) {
+      apiEndpoint = "generateInpaint"
+    } else {
+      apiEndpoint = "generateImage"
+    }
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generateImage`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/${apiEndpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: imageInput, promptType: selGoal, promptTone: selTone }),
+        body: JSON.stringify({ prompt: imageInput, promptType: selGoal, promptTone: selTone, keyword: keyword, mask: mask }),
       });
       const data = await response.json();
       if (response.status !== 200) {
@@ -76,7 +85,17 @@ export default function ImageInput() {
   const editorChange = useCallback((value, viewUpdate) => {
     setImageResult(value);
   }, []);
-  
+
+  function keywordInputChange(event) {
+    setKeyword(event.target.value);
+    event.preventDefault();
+  }
+
+  function maskInputChange(event) {
+    setMask(event.target.value);
+    event.preventDefault();
+  }
+
   function runClickPlay(event) {
     event.preventDefault();
   }
@@ -113,7 +132,10 @@ export default function ImageInput() {
           <h3 className="font-semibold text-gray-500">Image Description prompt</h3>
         </div>
 
-        <Form key="form-01" selectGoal={selGoal} goalSelectChange={goalSelectChange} egArray={contentLengthArray} selectTone={selTone} toneSelectChange={toneSelectChange} toneTypeArray={toneTypeArray}/>
+        <Form key="form-01" selectGoal={selGoal} goalSelectChange={goalSelectChange} egArray={contentLengthArray} selectTone={selTone} 
+        toneSelectChange={toneSelectChange} toneTypeArray={toneTypeArray} 
+        keywordInput={keyword} keywordInputChange={keywordInputChange}
+        maskInput={mask} maskInputChange={maskInputChange}/>
 
         <form onSubmit={imageInputSubmit} className="w-full">
           <textarea key="textarea-01" className="block min-h-[50px] xs:min-h-[70px] border-[1.5px] border-emerald-500 p-2 rounded w-full mb-2 text-sm

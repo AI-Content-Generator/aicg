@@ -1,9 +1,11 @@
+
 export default async function (req, res) {
-  const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/text2img"
+  const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/inpaint"
   const prompt = req.body.prompt || '';
   const promptType = req.body.promptType
   const promptTone = req.body.promptTone
   const keyword = req.body.keyword
+  const mask = req.body.mask
   if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -16,10 +18,13 @@ export default async function (req, res) {
   console.log('User prompt in generateImage:', prompt);
   console.log('User prompt type in generateImage:', promptType);
   console.log('User prompt tone in generateImage:', promptTone);
+  console.log('User prompt keyword:', keyword);
+  console.log('User prompt mask:', mask);
+
 
   try {
   var raw = JSON.stringify({
-      "key": process.env.STABLE_DIFFUSION_KEY,
+      "key": "bSq1iiXf0iGczD38jmCvEVSwZM4LL9yXVmA8Ijdw2Nv4gFGuptBRW2b0PzFq",
       "prompt": prompt,
       "negative_prompt": null,
       "width": "512",
@@ -35,7 +40,9 @@ export default async function (req, res) {
       "upscale": "no",
       "embeddings_model": "embeddings_model_id",
       "webhook": null,
-      "track_id": null
+      "track_id": null,
+      "init_image": keyword,
+      "mask_image": mask
     });
 
     const myHeaders = {
