@@ -41,6 +41,11 @@ For dev mode, run:
 
 `npx next dev`
 
+To build browser extension, run:
+
+`npm run build:extension`
+`npm run dev:extension`
+
 
 ## Acknowledgments 🙏
 

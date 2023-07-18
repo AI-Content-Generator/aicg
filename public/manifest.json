@@ -1,0 +1,22 @@
+{
+    "name": "AICG",
+    "description": "The power of React and TypeScript for building interactive Chrome extensions",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Open the popup"
+    },
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["https://*/*", "http://*/*"],
+        "js": ["inject.js"]
+      }
+    ],  
+    "icons": {
+        "16": "gpt-p5-emerald.png",
+        "48": "gpt-p5-emerald.png",
+        "128": "gpt-p5-emerald.png"
+    }
+ }
