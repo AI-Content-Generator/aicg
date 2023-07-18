@@ -1,4 +1,4 @@
-export default function Form({selectGoal, goalSelectChange, egArray, selectTone, toneSelectChange, toneTypeArray}) {
+export default function Form({step, selectGoal, goalSelectChange, egArray, selectTone, toneSelectChange, toneTypeArray}) {
   return (
     <form>
       <div className="overflow-scroll rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
@@ -66,7 +66,25 @@ export default function Form({selectGoal, goalSelectChange, egArray, selectTone,
                 </select>
               </div>
             </div>
-
+            
+            {/* <div className={'button-container'}>
+                {step > 1 && (
+                    <button
+                        className={`${'button'} ${step === 1 ? 'back-button' : ''}`}
+                        onClick={handlePreviousStep}
+                        disabled={step === 1}
+                    >
+                        Back
+                    </button>
+                )}
+                <button 
+                    className={`${'button'} ${isNextDisabled ? 'next-button' : ''}`}
+                    onClick={handleNextStep}
+                    disabled={isNextDisabled}
+                >
+                    Next
+                </button>
+            </div> */}
 
           </div>
         </div>

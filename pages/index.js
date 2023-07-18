@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import TextInput from "./components/TextInput";
 import ImageInput from "./components/ImageInput";
 
@@ -23,11 +24,16 @@ export default function Home() {
           </div>
           </div>
         </header>
-        <div className="flex flex-col gap-4 2xl:flex-row w-full">
-          <div className="flex flex-col gap-4 2xl:w-1/2">
-            <TextInput/>
-            <br/>
-            <ImageInput/>
+        <div className="index-main-container">
+          <div className="button-container">
+            <Link legacyBehavior href="./components/TextInput">
+              <a className="button-green">Go to Text-To-Text Input</a>
+            </Link>
+          </div>
+          <div className="button-container">
+            <Link legacyBehavior href="./components/ImageInput">
+              <a className="button-green">Go to Text-To-Image Input</a>
+            </Link>
           </div>
         </div>
         <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://chat.openai.com/" target="_blank" className="underline">AICG</a></p>

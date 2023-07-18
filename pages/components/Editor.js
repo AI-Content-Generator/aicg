@@ -5,38 +5,39 @@ export default function Editor({result, onChange, waiting}) {
   const fileUrl = result 
   var isDisabled = !fileUrl || !fileUrl.endsWith(".png");
 
-  const handleDownload = () => {
-    const newTab = window.open(fileUrl, "_blank");
-    if (newTab) {
-      newTab.focus();
-    } else {
-      console.error("Failed to open the image in a new tab.");
-    }
-  };
+  // The below is to open up the image in a new tab
+  // const handleDownload = () => {
+  //   const newTab = window.open(fileUrl, "_blank");
+  //   if (newTab) {
+  //     newTab.focus();
+  //   } else {fd
+  //     console.error("Failed to open the image in a new tab.");
+  //   }
+  // };
 
   // The below is to actually download to user's local file system
-  // const handleDownload = async () => {
-  //   try {
-  //     const response = await fetch(fileUrl);
-  //     const blob = await response.blob();
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
 
-  //     // Create a temporary URL object
-  //     const url = window.URL.createObjectURL(blob);
+      // Create a temporary URL object
+      const url = window.URL.createObjectURL(blob);
 
-  //     // Create a temporary <a> element
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.setAttribute("download", "image.png");
-  //     link.click();
+      // Create a temporary <a> element
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "image.png");
+      link.click();
 
-  //     // Cleanup
-  //     URL.revokeObjectURL(url);
+      // Cleanup
+      URL.revokeObjectURL(url);
 
-  //     setDownloaded(true);
-  //   } catch (error) {
-  //     console.error("Error downloading file:", error);
-  //   }
-
+      setDownloaded(true);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  }
 
   return (
     <div className="max-h-[25vh] overflow-scroll rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">

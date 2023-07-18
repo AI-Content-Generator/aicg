@@ -30,7 +30,7 @@ function runMiddleware(req, res, fn) {
 /* For testing */
 // export default async function (req, res) {
 //   setTimeout(() => {
-//     res.status(200).json({ code: `console.log("hello world ${req.body.prompt}")`});
+//     res.status(200).json({ code: `console.log("hello world ${JSON.stringify(req.body)}")`});
 //   }, 1000);
 // }
 
@@ -46,10 +46,15 @@ export default async function (req, res) {
     return;
   }
 
-  const prompt = req.body.prompt || '';
-  let promptType = req.body.promptType
-  let promptTone = req.body.promptTone
-  if (prompt.trim().length === 0) {
+  let productName = req.body.productName
+  let productDescription = req.body.productDescription
+  let tone = req.body.tone
+  let goal = req.body.goal
+  let productPrice = req.body.productPrice
+  let productOptions = req.body.productOptions
+  let otherKeywords = req.body.otherKeywords
+  
+  if (productName.trim().length === 0) {
     res.status(400).json({
       error: {
         message: "Please enter a valid prompt",
@@ -58,21 +63,24 @@ export default async function (req, res) {
     return;
   }
 
-  if (promptType === "") {
-    promptType = "30 Characters Headline"
+  // TODO: set default values for other input items
+
+  if (goal === "") {
+    goal = "30 Characters Headline"
   }
 
-  if (promptTone === "") {
-    promptTone = "friendly"
+  if (tone === "") {
+    tone = "friendly"
   }
 
-  console.log('User prompt:', prompt);
-  console.log('User prompt type:', promptType);
-  console.log('User prompt tone:', promptTone);
-  
-  
-  let query = `Do not explain, answer only in ${promptTone} tone. You are converting user text input into a Google Ad ${promptType}. This is the user text input: ${prompt}`
-
+  let query = `Do not explain, answer only in ${tone} tone. 
+              You are converting user text input into a Google Ad with limitation of ${goal}. 
+              The followings are information for the product that the user want to create an advertisement for: 
+              1. Product Name is ${productName}, 
+              2. Product Description is ${productDescription},
+              3. Product Price is ${productPrice}, 
+              4. Product Options are ${productOptions},
+              5. Other Keywords are ${otherKeywords}`
 
   try {
     const completion = await openai.createChatCompletion({

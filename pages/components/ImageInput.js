@@ -131,7 +131,7 @@ export default function ImageInput() {
             Generating image...
           </button>
           : 
-          <button className="bg-emerald-500 p-2 rounded w-full text-white text-sm px-3 cursor-pointer" type="submit">Generate image</button> }
+          <button className="button-green" type="submit">Generate image</button> }
         </form>
 
         <Editor key="editor-01" result={imageResult} onChange={editorChange} waiting={waiting}/>

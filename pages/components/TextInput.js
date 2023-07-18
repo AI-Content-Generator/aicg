@@ -1,37 +1,58 @@
 import { useState, useCallback, useEffect } from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Editor from "./Editor";
-import Form from "./Form";
+import { MultiStepForm } from "./MultiStepsForm";
+import { MultiStepsProgressBar } from "./MultiStepsProgressBar";
+import { questions, combinedQuestionsList } from "./Questions";
 
 export default function TextInput() {
-  const [result, setResult] = useState("// type a text prompt above and click 'Generate content'");
+  const [step, setStep] = useState(1);
+  const [submitted, setSubmitted] = useState(false);
+  const [pagesAnswers, setPagesAnswers] = useState({});
+
   const [textInput, setTextInput] = useState("");
-  const [waiting, setWaiting] = useState(false);
+  const [result, setResult] = useState("// type a text prompt above and click 'Generate content'");
   const [logMsg, setlogMsg] = useState("");
+  
+  const [waiting, setWaiting] = useState(false);
+  const [inputItems, setInputItems] = useState(combinedQuestionsList);
   const [selGoal, setSelGoal] = useState("");
   const [selTone, setSelTone] = useState("");
 
-  const contentLengthArray = [
-    {
-      value: "30 Characters Headline",
-      length: "30"
-    },
-    {
-      value: "90 Characters Description",
-      length: "90"
-    }
-  ]
+  const totalPagesCount = questions?.length || 0;
 
-  const toneTypeArray = [
-    {
-      value: "friendly",
-      length: "friendly"
-    },
-    {
-      value: "excited",
-      length: "excited"
+  // Buttons for Muti Steps Progress Bar
+  const prevButton = () => {
+    if (step > 1) {
+      setStep(prevIndex => prevIndex - 1);
     }
-  ]
+  }
 
+  const nextButton = () => {
+    if (step - 3) {
+      setStep(prevIndex => prevIndex + 1);
+    } else {
+      // clear the form on submit
+      submitInputItems()
+      setPagesAnswers({});
+      setInputItems(combinedQuestionsList)
+      setSubmitted(true);
+    }
+  }
+
+  const handleRestart = () => {
+    setStep(1);
+    setSubmitted(false);
+    setResult("// type a text prompt above and click 'Generate content'")
+  }
+
+  // pageAnswer is the input items on each page
+  const onPageAnswerUpdate = (step, answersObj) => {
+    updateInputItems(answersObj)
+    setPagesAnswers({...pagesAnswers, [step]: answersObj});
+  }
+
+  // TODO: Not sure if we can delete this
   useEffect(() => {
     let ranOnce = false;
 
@@ -50,25 +71,58 @@ export default function TextInput() {
     // clean up
     return () => window.removeEventListener("message", handler)
   }, [result])
+  
+  // inputItems is the collection of answers from all pages/steps
+  const updateInputItems = (answersObj) => {
+    const updatedInputItems = inputItems.map((item) => {
+      if (item.label in answersObj) {
+        const value = answersObj[item.label];
+        return { ...item, value };
+      } else {
+        return { ...item }
+      }
+    });
 
-  function textInputChange(event) {
-    event.preventDefault();
-    setTextInput(event.target.value);
+    setInputItems(updatedInputItems);
+  };
+
+  // Convert the input into a dictionary {"Product Name" : "unbrella", "Tone" : " Friendly", ...}
+  const processInputItems = (inputItems) => {
+    var inputItemsDict = {}
+
+    for (const idx in inputItems) {
+      const inputItem = inputItems[idx]
+      if (inputItem.value != null && inputItem.value != inputItem.label) {
+        inputItemsDict[inputItem.label] = inputItem.value
+      }
+    }
+
+    return inputItemsDict
   }
 
-  async function textInputSubmit(event) {
-    event.preventDefault();
+  // Upon "submit" button is hit
+  async function submitInputItems(event) {
     setlogMsg("");
     setWaiting(true);
     setResult("// Please be patient, this may take a while...");
     setSelGoal("");
+    const processedInputItems = processInputItems(inputItems)
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generateText`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: textInput, promptType: selGoal, promptTone: selTone }),
+        body: JSON.stringify({ 
+          productName: processedInputItems['Product Name'],
+          productDescription: processedInputItems['Product Description'],
+          tone: processedInputItems['Tone'],
+          goal: processedInputItems['Goal'],
+          productPrice: processedInputItems['Product Price'],
+          productOptions: processedInputItems['Product Options'],
+          otherKeywords: processedInputItems['Other Keywords'],
+        }),
       });
 
       const data = await response.json();
@@ -89,64 +143,50 @@ export default function TextInput() {
     setResult(value);
   }, []);
   
-  function runClickPlay(event) {
-    event.preventDefault();
-  }
 
-  function runClickStop(event) {
-    event.preventDefault();
-    setlogMsg("");
-  }
-
-  function goalSelectChange(event) {
-    setSelGoal(event.target.value);
-    event.preventDefault();
-    const search = event.target.value;
-    const selectedEg = contentLengthArray.find((obj) => obj.value === search);
-    if(selectedEg) {
-      setlogMsg('');
-      setTextInput(selectedEg.prompt);
-      setResult(selectedEg.code);
-    } else {
-      setlogMsg('');
-      setTextInput('');
-      setResult('');
-    }
-  }
-
-  function toneSelectChange(event) {
-    setSelTone(event.target.value);
-    event.preventDefault();
-  }
-
-    return (
-      <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
-        <div className="flex justify-between xs:mb-2">
-          <h3 className="font-semibold text-gray-500">Text prompt</h3>
-        </div>
-
-        <Form key="form-01" selectGoal={selGoal} goalSelectChange={goalSelectChange} egArray={contentLengthArray} selectTone={selTone} toneSelectChange={toneSelectChange} toneTypeArray={toneTypeArray}/>
-
-        <form onSubmit={textInputSubmit} className="w-full">
-          <textarea key="textarea-01" className="block min-h-[50px] xs:min-h-[70px] border-[1.5px] border-emerald-500 p-2 rounded w-full mb-2 text-sm
-          disabled:border-gray-300 disabled:text-gray-600 disabled:bg-gray-100"
-            type="text"
-            name="prompt"
-            placeholder="Enter a text prompt for content generation. Click the dropdown for type of content."
-            value={textInput}
-            onChange={textInputChange}
-            disabled={waiting}
-          />
-          { waiting ? 
-          <button className="bg-gray-300 p-2 rounded w-full text-white text-sm px-3" type="submit" disabled>
-            <img src="loading.png" alt="loading icon" className="animate-spin w-4 h-4 mr-2 inline" />
-            Generating content...
-          </button>
-          : 
-          <button className="bg-emerald-500 p-2 rounded w-full text-white text-sm px-3 cursor-pointer" type="submit">Generate content</button> }
-        </form>
-        
-        <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
+  return (
+    <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
+      <div className="flex justify-between xs:mb-2">
+        <h3 className="font-semibold text-gray-500">Text prompt</h3>
       </div>
-    );
+
+      <Container className="h-100 w-full">
+        <Row className="m-5">
+          <Col className="align-self-center">
+            <MultiStepsProgressBar step={step}/>
+          </Col>
+        </Row>
+
+        <Row>
+          {
+            submitted ?
+            <Card>
+              <Card.Body>
+                <p>Your answers have been submitted!</p>
+              </Card.Body>
+              <Card.Footer>
+                <Button onClick={handleRestart}>Start Over</Button>
+              </Card.Footer>
+            </Card> :
+          <Card>
+            <Card.Body>
+              <MultiStepForm
+                list={questions}
+                step={step}
+                onPageUpdate={onPageAnswerUpdate}
+                pagesAnswers={pagesAnswers}
+              />
+            </Card.Body>
+            <Card.Footer className="button-container d-flex justify-content-between">
+              <Button className="button left-button" onClick={prevButton} disabled={step == 1}>Previous</Button>
+              <Button className="button right-button" onClick={nextButton}>{step == totalPagesCount ? 'Submit' : 'Next'}</Button>
+            </Card.Footer>
+          </Card>
+        }
+        </Row>        
+      </Container>
+      
+      <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
+    </div>
+  );
   }
