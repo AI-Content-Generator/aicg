@@ -4,6 +4,7 @@ import Editor from "./Editor";
 import { MultiStepForm } from "./MultiStepsForm";
 import { MultiStepsProgressBar } from "./MultiStepsProgressBar";
 import { questions, combinedQuestionsList } from "./Questions";
+import { buildQuery } from "../constant/Queries";
 
 export default function TextInput() {
   const [step, setStep] = useState(1);
@@ -50,6 +51,20 @@ export default function TextInput() {
   const onPageAnswerUpdate = (step, answersObj) => {
     updateInputItems(answersObj)
     setPagesAnswers({...pagesAnswers, [step]: answersObj});
+  }
+
+  const onPageAnswerBlur = () => {
+    const processedInputItems = processInputItems(inputItems)
+
+    let productName = processedInputItems['Product Name']
+    let productDescription = processedInputItems['Product Description']
+    let tone = processedInputItems['Tone']
+    let goal = processedInputItems['Goal']
+    let productPrice = processedInputItems['Product Price']
+    let productOptions = processedInputItems['Product Options']
+    let otherKeywords = processedInputItems['Other Keywords']
+    const query = buildQuery(tone, goal, productName, productDescription, productPrice, productOptions, otherKeywords)
+    setResult(query);
   }
 
   // TODO: Not sure if we can delete this
@@ -162,10 +177,14 @@ export default function TextInput() {
             submitted ?
             <Card>
               <Card.Body>
-                <p>Your answers have been submitted!</p>
+                <div className="flex justify-between xs:mb-2">
+                  <p className="font-semibold text-gray-400">Your inputs have been submitted!</p>
+                </div>
               </Card.Body>
               <Card.Footer>
-                <Button onClick={handleRestart}>Start Over</Button>
+                <div className="flex justify-between xs:mb-2">
+                  <Button className="button right-button" onClick={handleRestart}>Start Over</Button>
+                </div>
               </Card.Footer>
             </Card> :
           <Card>
@@ -175,6 +194,7 @@ export default function TextInput() {
                 step={step}
                 onPageUpdate={onPageAnswerUpdate}
                 pagesAnswers={pagesAnswers}
+                onPageBlur={onPageAnswerBlur}
               />
             </Card.Body>
             <Card.Footer className="button-container d-flex justify-content-between">

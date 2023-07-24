@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import Cors from 'cors';
+import { buildQuery } from "../constant/Queries";
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -63,24 +64,7 @@ export default async function (req, res) {
     return;
   }
 
-  // TODO: set default values for other input items
-
-  if (goal === "") {
-    goal = "30 Characters Headline"
-  }
-
-  if (tone === "") {
-    tone = "friendly"
-  }
-
-  let query = `Do not explain, answer only in ${tone} tone. 
-              You are converting user text input into a Google Ad with limitation of ${goal}. 
-              The followings are information for the product that the user want to create an advertisement for: 
-              1. Product Name is ${productName}, 
-              2. Product Description is ${productDescription},
-              3. Product Price is ${productPrice}, 
-              4. Product Options are ${productOptions},
-              5. Other Keywords are ${otherKeywords}`
+  let query = buildQuery(tone, goal, productName, productDescription, productPrice, productOptions, otherKeywords)
 
   try {
     const completion = await openai.createChatCompletion({

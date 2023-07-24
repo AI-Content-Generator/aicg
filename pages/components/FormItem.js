@@ -1,7 +1,7 @@
 import { Form, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 
-export const FormItem =  ({ item, onChange, answer })  => {
+export const FormItem =  ({ item, onChange, onBlur, answer })  => {
   const [currentValue, setCurrentValue] = useState(answer || null);
 
   const handleChange = (value) => {
@@ -22,10 +22,11 @@ export const FormItem =  ({ item, onChange, answer })  => {
               type="text"
               id={item.label}
               onChange={(e) => handleChange(e.target.value, item.value)}
+              onBlur={(e) => onBlur()}
               value={currentValue}
             />
           </FormGroup>
-        )
+      )
         break;
       case 'select':
         return (
@@ -38,6 +39,7 @@ export const FormItem =  ({ item, onChange, answer })  => {
             <Form.Select 
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 aria-label={item.label} 
+                onBlur={(e) => onBlur()}
                 onChange={(e) => onChange(e.target.value, item.value)}>
                 <option>{item.label}</option>
                 {

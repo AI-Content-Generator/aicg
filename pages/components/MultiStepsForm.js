@@ -18,8 +18,16 @@ export const MultiStepForm = (props) => {
     }
   }, [props.step])
 
+  useEffect(() => {
+    props.onPageUpdate(answers.step, answers);
+  }, [answers])
+
   const updateAnswers = (value, category) => {
     setAnswers({...answers, [category]: value});
+  }
+
+  const previewAnswers = async () => {
+    props.onPageBlur();
   }
 
   return (
@@ -27,7 +35,7 @@ export const MultiStepForm = (props) => {
       {
         props.list[props.step - 1].items?.map((item, step) => {
           return (
-            <FormItem key={`${step}_${item.label}`} item={item} onChange={updateAnswers} answer={props.pagesAnswers[props.step] ? props.pagesAnswers[props.step][item.value] : null} />
+            <FormItem key={`${step}_${item.label}`} item={item} onChange={updateAnswers} onBlur={previewAnswers} answer={props.pagesAnswers[props.step] ? props.pagesAnswers[props.step][item.value] : null} />
           )
         })
       }

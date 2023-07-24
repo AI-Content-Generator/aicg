@@ -13,13 +13,13 @@ export const sectionOneQuestions = [
     label: 'Tone',
     type: 'select',
     value: 'Tone',
-    options: [ 'friendly', 'excited']
+    options: [ 'friendly', 'uplifting', 'funny', 'witty', 'straightforward', 'humble', 'casual', 'formal', 'inspiring']
   },
   {
     label: 'Goal',
     type: 'select',
     value: 'Goal',
-    options: [ '30 Characters Headline', '90 Characters Description']
+    options: [ '30 Characters Headline', '90 Characters Description', '125 Characters Description']
   },
 ]
 
