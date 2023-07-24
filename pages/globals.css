@@ -187,3 +187,32 @@ label {
 .form-container {
     margin-bottom: 2rem;
 }
+
+/* Editor - the Output Box */
+.output-container {
+    min-width: 200px;
+    min-height: 80px;
+    max-width: 400px;
+    max-height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.output-card {
+    border: 1.5px solid #d1d5db;
+    border-radius: 5px;
+    overflow: "clip";    
+}
+
+.output-text-read-only {
+    font-size: 16px;
+    padding: 0.5rem;
+    color: #6b7280;
+}
+
+.output-text-can-edit {
+    font-size: 16px;
+    padding: 0.5rem;
+    color: black;
+}

@@ -12,7 +12,7 @@ export default function TextInput() {
   const [pagesAnswers, setPagesAnswers] = useState({});
 
   const [textInput, setTextInput] = useState("");
-  const [result, setResult] = useState("// type a text prompt above and click 'Generate content'");
+  const [result, setResult] = useState("Your input prompt will be shown here. Once confirmed, click 'Submit'");
   const [logMsg, setlogMsg] = useState("");
   
   const [waiting, setWaiting] = useState(false);
