@@ -9,7 +9,7 @@ export const MultiStepsProgressBar = (props) => {
   return (
     <ProgressBar
         percent={((props.step - 1) * 100) / 2}
-        filledBackground="indigo"
+        filledBackground="#10B981"
       >
         <Step transition="scale">
           {({ accomplished, index }) => (
