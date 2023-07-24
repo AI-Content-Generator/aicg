@@ -1,3 +1,5 @@
+export default function Question() {}
+
 export const sectionOneQuestions = [
   {
     label: 'Product Name',

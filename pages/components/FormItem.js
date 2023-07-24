@@ -1,6 +1,9 @@
 import { Form, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 
+export default function FormItemDefault() {}
+
+
 export const FormItem =  ({ item, onChange, onBlur, answer })  => {
   const [currentValue, setCurrentValue] = useState(answer || null);
 

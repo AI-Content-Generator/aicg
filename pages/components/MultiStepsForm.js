@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FormItem } from "./FormItem";
 
+export default function MultiStepFormDefault() {}
+
 export const MultiStepForm = (props) => {
   // store step number with the answers?
   const [answers, setAnswers] = useState({ step: props.step });

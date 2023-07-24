@@ -1,3 +1,5 @@
+export default function Query() {}
+
 export function buildQuery(tone, goal, productName, productDescription, productPrice, productOptions, otherKeywords) { 
     // TODO: set default values for other input items
 
