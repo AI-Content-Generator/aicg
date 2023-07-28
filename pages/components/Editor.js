@@ -49,7 +49,7 @@ export default function Editor({result, onChange, waiting}) {
           onChange={onChange}
           readOnly={waiting}>
           <Card.Body>
-            <Card.Text className = { `${waiting ? "output-text-can-edit" : "output-text-read-only"}` } wrap={false}>
+            <Card.Text className = { `${waiting ? "output-text-can-edit" : "output-text-read-only"}` }>
               {result}
             </Card.Text>
           </Card.Body>

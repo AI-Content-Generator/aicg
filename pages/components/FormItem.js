@@ -5,7 +5,7 @@ export default function FormItemDefault() {}
 
 
 export const FormItem =  ({ item, onChange, onBlur, answer })  => {
-  const [currentValue, setCurrentValue] = useState(answer || null);
+  const [currentValue, setCurrentValue] = useState(answer || '');
 
   const handleChange = (value) => {
     setCurrentValue(value);
@@ -48,7 +48,7 @@ export const FormItem =  ({ item, onChange, onBlur, answer })  => {
                 {
                     item.options.map((opt, index) => {
                     return (
-                        <option value={opt}>{opt}</option>
+                        <option key={index} value={opt}>{opt}</option>
                     )
                     })
                 }
