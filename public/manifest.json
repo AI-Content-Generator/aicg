@@ -4,10 +4,10 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "index.html",
-        "default_title": "Open the popup"
+        "default_popup": "index.html"
     },
-    "permissions": ["activeTab"],
+    "permissions": [],
+    "host_permissions": ["<all_urls>"],
     "content_scripts": [
       {
         "matches": ["https://*/*", "http://*/*"],

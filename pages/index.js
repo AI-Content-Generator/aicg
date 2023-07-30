@@ -26,14 +26,10 @@ export default function Home() {
         </header>
         <div className="index-main-container">
           <div className="button-container">
-            <Link legacyBehavior href="./components/TextInput">
-              <a className="button-green">Go to Text-To-Text Input</a>
-            </Link>
+              <a href="./components/TextInput.html" className="button-green">Go to Text-To-Text Input</a>
           </div>
           <div className="button-container">
-            <Link legacyBehavior href="./components/ImageInput">
-              <a className="button-green">Go to Text-To-Image Input</a>
-            </Link>
+              <a href="./components/ImageInput.html" className="button-green">Go to Text-To-Image Input</a>
           </div>
         </div>
         <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://chat.openai.com/" target="_blank" className="underline">AICG</a></p>
