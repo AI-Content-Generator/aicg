@@ -188,6 +188,14 @@ label {
     margin-bottom: 2rem;
 }
 
+.information-item{
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
 /* Editor - the Output Box */
 .output-container {
     min-width: 200px;

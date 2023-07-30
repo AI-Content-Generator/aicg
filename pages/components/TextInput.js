@@ -14,6 +14,7 @@ export default function TextInput() {
   const [textInput, setTextInput] = useState("");
   const [result, setResult] = useState("Your input prompt will be shown here. Once confirmed, click 'Submit'");
   const [logMsg, setlogMsg] = useState("");
+  const [isValidated, setIsValidated] = useState(false)
   
   const [waiting, setWaiting] = useState(false);
   const [inputItems, setInputItems] = useState(combinedQuestionsList);
@@ -30,7 +31,9 @@ export default function TextInput() {
   }
 
   const nextButton = () => {
-    if (step - 3) {
+    if ( !isValidated ) {
+      alert("Please fill all required fields.");
+    } else if (step - 3) {
       setStep(prevIndex => prevIndex + 1);
     } else {
       // clear the form on submit
@@ -45,6 +48,7 @@ export default function TextInput() {
     setStep(1);
     setSubmitted(false);
     setResult("// type a text prompt above and click 'Generate content'")
+    setIsValidated(false);
   }
 
   // pageAnswer is the input items on each page
@@ -115,6 +119,10 @@ export default function TextInput() {
     return inputItemsDict
   }
 
+  const checkIsValidated = (isValid) => {
+    setIsValidated(isValid)
+  }
+
   // Upon "submit" button is hit
   async function submitInputItems(event) {
     setlogMsg("");
@@ -148,7 +156,6 @@ export default function TextInput() {
       setResult(data.code);
       setWaiting(false);
     } catch(error) {
-      console.error(error);
       alert(error.message);
       setWaiting(false);
     }
@@ -195,6 +202,7 @@ export default function TextInput() {
                 onPageUpdate={onPageAnswerUpdate}
                 pagesAnswers={pagesAnswers}
                 onPageBlur={onPageAnswerBlur}
+                checkIsValidated={checkIsValidated}
               />
             </Card.Body>
             <Card.Footer className="button-container d-flex justify-content-between">

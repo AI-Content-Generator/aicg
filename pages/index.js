@@ -1,8 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import TextInput from "./components/TextInput";
-import ImageInput from "./components/ImageInput";
-
 
 export default function Home() {
   return (

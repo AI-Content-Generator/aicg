@@ -2,26 +2,30 @@ export default function Question() {}
 
 export const sectionOneQuestions = [
   {
-    label: 'Product Name',
+    label: 'Product Name *',
     type: 'text',
-    value: 'Product Name'
+    value: 'Product Name',
+    required: true
   },
   {
-    label: 'Product Description',
+    label: 'Product Description *',
     type: 'text',
-    value: 'Product Description'
+    value: 'Product Description',
+    required: true
   },
   {
-    label: 'Tone',
+    label: 'Tone *',
     type: 'select',
     value: 'Tone',
-    options: [ 'friendly', 'uplifting', 'funny', 'witty', 'straightforward', 'humble', 'casual', 'formal', 'inspiring']
+    options: [ 'friendly', 'uplifting', 'funny', 'witty', 'straightforward', 'humble', 'casual', 'formal', 'inspiring'],
+    required: true
   },
   {
-    label: 'Goal',
+    label: 'Goal *',
     type: 'select',
     value: 'Goal',
-    options: [ '30 Characters Headline', '90 Characters Description', '125 Characters Description']
+    options: [ '30 Characters Headline', '90 Characters Description', '125 Characters Description'],
+    required: true
   },
 ]
 
@@ -29,24 +33,29 @@ export const sectionTwoQuestions = [
   {
     label: 'Product Price',
     type: 'text',
-    value: 'Product Price'
+    value: 'Product Price',
+    required: false
   },
   {
     label: 'Product Options',
     type: 'text',
-    value: 'Product Options'
+    value: 'Product Options',
+    required: false
   },
   {
     label: 'Other Keywords',
     type: 'text',
-    value: 'Other Keywords'
+    value: 'Other Keywords',
+    required: false
   },
 ]
 
 export const sectionThreeQuestions = [
   {
-    label: 'If you are ready to submit please press `Submit`',
-    type: 'information'
+    label: "If you are ready to submit please press 'Submit'!",
+    type: 'information',
+    value: "If you are ready to submit please press 'Submit'!",
+    required: false
   }
 ]
 

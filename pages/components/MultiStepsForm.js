@@ -6,19 +6,7 @@ export default function MultiStepFormDefault() {}
 export const MultiStepForm = (props) => {
   // store step number with the answers?
   const [answers, setAnswers] = useState({ step: props.step });
-
-  useEffect(() => {
-    // check if the answers isn't empty
-    if (Object.keys(answers).length > 1) {
-      // update page answers
-      props.onPageUpdate(answers.step, answers);
-      // update page number locally
-      setAnswers({ step: props.step })
-    } else {
-      // update page number locally
-      setAnswers({ step: props.step })
-    }
-  }, [props.step])
+  const [requiredFields, setRequiredFields] = useState([]);
 
   useEffect(() => {
     props.onPageUpdate(answers.step, answers);
@@ -28,8 +16,28 @@ export const MultiStepForm = (props) => {
     setAnswers({...answers, [category]: value});
   }
 
-  const previewAnswers = async () => {
+  const handleBlur = (field, value, isRequired) => {
+    // Check if the required field is filled or not, and update the requiredFields state
+    if (isRequired) {
+      if (field && field.trim() !== '') {
+      setRequiredFields((prevFields) => prevFields.filter((item) => item !== value));
+      } else {
+        setRequiredFields((prevFields) => [...prevFields, value]);
+      }
+    }
+    checkIsValidated();
     props.onPageBlur();
+  }
+
+  const checkIsValidated = () => {
+    let isValid = true
+    for (const item of props.list[props.step - 1].items || []) {
+      if (item.required && (!answers[item.value] || answers[item.value].trim() === "")) {
+        isValid = false;
+        break;
+      }
+    }
+    props.checkIsValidated(isValid)
   }
 
   return (
@@ -37,7 +45,16 @@ export const MultiStepForm = (props) => {
       {
         props.list[props.step - 1].items?.map((item, step) => {
           return (
-            <FormItem key={`${step}_${item.label}`} item={item} onChange={updateAnswers} onBlur={previewAnswers} answer={props.pagesAnswers[props.step] ? props.pagesAnswers[props.step][item.value] : null} />
+            <div>
+              <FormItem 
+                key={`${step}_${item.label}`} 
+                item={item} 
+                onChange={updateAnswers} 
+                onBlur={() => handleBlur(answers[item.value], item.value, item.required)} 
+                answer={props.pagesAnswers[props.step] ? props.pagesAnswers[props.step][item.value] : null} 
+                isRequiredError={requiredFields.includes(item.value)}
+                />
+            </div>
           )
         })
       }
