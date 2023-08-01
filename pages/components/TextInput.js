@@ -54,7 +54,7 @@ export default function TextInput() {
   // pageAnswer is the input items on each page
   const onPageAnswerUpdate = (step, answersObj) => {
     updateInputItems(answersObj)
-    setPagesAnswers({...pagesAnswers, [step]: answersObj});
+    setPagesAnswers((pagesAnswers) => ({...pagesAnswers, [step]: answersObj}));
   }
 
   const onPageAnswerBlur = () => {

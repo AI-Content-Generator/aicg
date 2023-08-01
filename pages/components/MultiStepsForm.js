@@ -6,7 +6,23 @@ export default function MultiStepFormDefault() {}
 export const MultiStepForm = (props) => {
   // store step number with the answers?
   const [answers, setAnswers] = useState({ step: props.step });
+<<<<<<< HEAD
   const [requiredFields, setRequiredFields] = useState([]);
+=======
+
+  useEffect(() => {
+    // check if the answers isn't empty
+    if (Object.keys(answers).length > 1) {
+      // update page answers
+      props.onPageUpdate(answers.step, answers);
+      // update page number locally
+      setAnswers({...answers, step: props.step })
+    } else {
+      // update page number locally
+      setAnswers({...answers, step: props.step })
+    }
+  }, [props.step])
+>>>>>>> 74a35d6 (fix: React state so that Previous button remember the previous input)
 
   useEffect(() => {
     props.onPageUpdate(answers.step, answers);
