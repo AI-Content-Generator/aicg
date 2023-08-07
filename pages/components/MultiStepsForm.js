@@ -33,7 +33,7 @@ export const MultiStepForm = (props) => {
     // Check if the required field is filled or not, and update the requiredFields state
     if (isRequired) {
       if (field && field.trim() !== '') {
-      setRequiredFields((prevFields) => prevFields.filter((item) => item !== value));
+        setRequiredFields((prevFields) => prevFields.filter((item) => item !== value));
       } else {
         setRequiredFields((prevFields) => [...prevFields, value]);
       }

@@ -2,26 +2,26 @@ export default function Question() {}
 
 export const sectionOneQuestions = [
   {
-    label: 'Product Name *',
+    label: 'Product Name',
     type: 'text',
     value: 'Product Name',
     required: true
   },
   {
-    label: 'Product Description *',
+    label: 'Product Description',
     type: 'text',
     value: 'Product Description',
     required: true
   },
   {
-    label: 'Tone *',
+    label: 'Tone',
     type: 'select',
     value: 'Tone',
     options: [ 'friendly', 'uplifting', 'funny', 'witty', 'straightforward', 'humble', 'casual', 'formal', 'inspiring'],
     required: true
   },
   {
-    label: 'Goal *',
+    label: 'Goal',
     type: 'select',
     value: 'Goal',
     options: [ '30 Characters Headline', '90 Characters Description', '125 Characters Description'],
