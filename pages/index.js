@@ -21,11 +21,11 @@ export default function Home() {
           </div>
           </div>
         </header>
-        <div className="index-main-container">
-          <div className="button-container">
+        <div className="flex flex-col gap-4 2xl:flex-row w-full">
+          <div className="button-container flex flex-col gap-4 2xl:w-1/2">
               <a href="./components/TextInput.html" className="button-green">Go to Text-To-Text Input</a>
           </div>
-          <div className="button-container">
+          <div className="button-container flex flex-col gap-4 2xl:w-1/2">
               <a href="./components/ImageInput.html" className="button-green">Go to Text-To-Image Input</a>
           </div>
         </div>
