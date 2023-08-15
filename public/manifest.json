@@ -6,11 +6,15 @@
     "action": {
         "default_popup": "index.html"
     },
-    "permissions": [],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["activeTab"],
     "host_permissions": ["<all_urls>"],
     "content_scripts": [
       {
         "matches": ["https://*/*", "http://*/*"],
+        "all_frames": true,
         "js": ["inject.js"]
       }
     ],  
@@ -18,5 +22,13 @@
         "16": "gpt-p5-emerald.png",
         "48": "gpt-p5-emerald.png",
         "128": "gpt-p5-emerald.png"
-    }
+    },
+    "web_accessible_resources": [{
+      "resources": ["inject.js","background.js", "components/**.html", "out/**.html", "*.html", "index.html"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+     }],
+     "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+     }
  }
