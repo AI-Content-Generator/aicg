@@ -206,8 +206,10 @@ export default function TextInput() {
               />
             </Card.Body>
             <Card.Footer className="button-container d-flex justify-content-between flex 2xl:w-full">
-              <Button className="button left-button" onClick={prevButton} disabled={step == 1}>Previous</Button>
-              <Button className="button right-button" onClick={nextButton}>{step == totalPagesCount ? 'Submit' : 'Next'}</Button>
+            <Button className={`button left-button ${step > 1 ? "" : "button-grey"}`} onClick={prevButton} disabled={step == 1}>Previous</Button>
+              <Button className={`button right-button ${isValidated ? "" : "button-grey"}`} onClick={nextButton}>
+                {step == totalPagesCount ? 'Submit' : 'Next'}
+              </Button>
             </Card.Footer>
           </Card>
         }
