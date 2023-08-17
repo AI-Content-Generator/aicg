@@ -4,10 +4,10 @@ export default function Editor({result, onChange, waiting}) {
   const fileUrl = result
 
   return (
-    <div className="max-h-[25vh] overflow-scroll rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
+    <div className="max-h-[50vh] min-h-[25vh] rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3" style={{ padding: "10px" }}>
       <h3 className="font-semibold text-gray-500 mb-2">Content</h3>
-      <Container className = "output-container ">
-        <Card className = "output-card"
+      <Container className = "output-container">
+        <Card className = "output-card overflow-scroll"
           key='output-card'
           onChange={onChange}
           readOnly={waiting}>
