@@ -7,12 +7,15 @@ import { questions, combinedQuestionsList } from "./Questions";
 import { buildQuery } from "../constant/Queries";
 
 export default function TextInput() {
+  const initialResult = "Your input prompt will be shown here. Once confirmed, click 'Submit'"
+  const totalPagesCount = questions?.length || 0;
+
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [pagesAnswers, setPagesAnswers] = useState({});
 
   const [textInput, setTextInput] = useState("");
-  const [result, setResult] = useState("Your input prompt will be shown here. Once confirmed, click 'Submit'");
+  const [result, setResult] = useState(initialResult);
   const [logMsg, setlogMsg] = useState("");
   const [isValidated, setIsValidated] = useState(false)
   
@@ -20,8 +23,7 @@ export default function TextInput() {
   const [inputItems, setInputItems] = useState(combinedQuestionsList);
   const [selGoal, setSelGoal] = useState("");
   const [selTone, setSelTone] = useState("");
-
-  const totalPagesCount = questions?.length || 0;
+  
 
   // Buttons for Muti Steps Progress Bar
   const prevButton = () => {
@@ -47,7 +49,7 @@ export default function TextInput() {
   const handleRestart = () => {
     setStep(1);
     setSubmitted(false);
-    setResult("// type a text prompt above and click 'Generate content'")
+    setResult(initialResult)
     setIsValidated(false);
   }
 
