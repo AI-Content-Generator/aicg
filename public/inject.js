@@ -3,11 +3,35 @@ var button = document.createElement("button");
 button.textContent = '<<<<<<< AIGC >>>>>>>';
 button.className = "button-container"
 button.setAttribute('class', 'button-container');
-document.body.appendChild(button);
+// document.body.appendChild(button)
+
+function findMainElement(rootNode) {
+  const elements = document.querySelectorAll('header[data-projection-id="2"]');
+
+  if (elements.length > 0) {
+    return elements[elements.length-1]
+  } else {
+    return rootNode // return the default Node if not found
+  }
+}
+
+var mainElement = null
+// Check every second to see if the DOM has been fully loaded and the mainElement can be found 
+const pollInterval = setInterval(function() {
+  mainElement = findMainElement(document.body);
+  if (mainElement) {
+    clearInterval(pollInterval);
+    mainElement.appendChild(button);
+  } else {
+    console.log("Main element not found yet.");
+  }
+}, 1000); 
+
+
 button.addEventListener("click", () => {
     chrome.runtime.sendMessage("OpenPopup")
     chrome.runtime.sendMessage("popup-modal")
-  })
+})
 
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -34,6 +58,7 @@ const showModal = () => {
         <button style="padding: 8px 12px; font-size: 16px; border: none; border-radius: 20px;">x</button>
         </div>`;
     document.body.appendChild(modal);
+
     const dialog = document.querySelector("dialog");
     dialog.showModal();
     const iframe = document.getElementById("popup-content");
@@ -43,7 +68,7 @@ const showModal = () => {
         dialog.close();
     });
 }
-
+    
 
 // function insertText(text) {
 //       // Access the generated text from the response object
@@ -55,5 +80,3 @@ const showModal = () => {
 
 //     // document.getElementById("prompt-textarea").value= text;
 // }
-    
-
