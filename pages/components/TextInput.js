@@ -39,7 +39,8 @@ export default function TextInput() {
       setStep(prevIndex => prevIndex + 1);
     } else {
       // clear the form on submit
-      submitInputItems()
+      // Used to be: submitInputItems(). No longer submitting for plugin use case.
+      handleCopyToClipboard();
       setPagesAnswers({});
       setInputItems(combinedQuestionsList)
       setSubmitted(true);
@@ -51,6 +52,20 @@ export default function TextInput() {
     setSubmitted(false);
     setResult(initialResult)
     setIsValidated(false);
+  }
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(result)
+    copyToClipboard(result) // for popup modal to work
+  }
+
+  const copyToClipboard = (textToCopy, containerElement = document.body) => {    
+    const textField = document.createElement('textarea');            
+    textField.value = textToCopy;
+    containerElement.appendChild(textField);
+    textField.select();
+    document.execCommand('copy'); 
+    containerElement.removeChild(textField);
   }
 
   // pageAnswer is the input items on each page
@@ -187,7 +202,7 @@ export default function TextInput() {
             <Card>
               <Card.Body>
                 <div className="flex justify-between xs:mb-2">
-                  <p className="font-semibold text-gray-400">Your inputs have been submitted!</p>
+                  <p className="font-semibold text-gray-400">Your query have been copied to clipboard!</p>
                 </div>
               </Card.Body>
               <Card.Footer>
@@ -210,7 +225,7 @@ export default function TextInput() {
             <Card.Footer className="button-container d-flex justify-content-between flex 2xl:w-full">
             <Button className={`button left-button ${step > 1 ? "" : "button-grey"}`} onClick={prevButton} disabled={step == 1}>Previous</Button>
               <Button className={`button right-button ${isValidated ? "" : "button-grey"}`} onClick={nextButton}>
-                {step == totalPagesCount ? 'Submit' : 'Next'}
+                {step == totalPagesCount ? 'Copy to Clipboard' : 'Next'}
               </Button>
             </Card.Footer>
           </Card>

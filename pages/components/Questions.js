@@ -52,9 +52,9 @@ export const sectionTwoQuestions = [
 
 export const sectionThreeQuestions = [
   {
-    label: "If you are ready to submit please press 'Submit'!",
+    label: "Review your query and press 'Copy to Clipboard'!",
     type: 'information',
-    value: "If you are ready to submit please press 'Submit'!",
+    value: "Review your query and press 'Copy to Clipboard'!",
     required: false
   }
 ]
