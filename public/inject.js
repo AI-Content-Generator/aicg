@@ -1,9 +1,17 @@
+// Create the buttonContainer element and set its text content
+var buttonContainer = document.createElement("button");
+buttonContainer.textContent = 'AI QuickDraft';
 
-var button = document.createElement("button");
-button.textContent = '<<<<<<< AIGC >>>>>>>';
-button.className = "button-container"
-button.setAttribute('class', 'button-container');
-// document.body.appendChild(button)
+// Apply styles to the button using the style property
+buttonContainer.style.backgroundColor = "#10B981";
+buttonContainer.style.color = "white";
+buttonContainer.style.padding = "0.5rem";
+buttonContainer.style.borderRadius = "4px";
+buttonContainer.style.fontSize = "0.875rem";
+buttonContainer.style.minWidth = "100px";
+buttonContainer.style.justifyContent = "space-between";
+buttonContainer.style.alignItems = "center";
+buttonContainer.style.margin = "0.4rem";
 
 function findMainElement(rootNode) {
   const elements = document.querySelectorAll('header[data-projection-id="2"]');
@@ -11,7 +19,7 @@ function findMainElement(rootNode) {
   if (elements.length > 0) {
     return elements[elements.length-1]
   } else {
-    return rootNode // return the default Node if not found
+    return null
   }
 }
 
@@ -21,14 +29,14 @@ const pollInterval = setInterval(function() {
   mainElement = findMainElement(document.body);
   if (mainElement) {
     clearInterval(pollInterval);
-    mainElement.appendChild(button);
+    mainElement.appendChild(buttonContainer);
   } else {
     console.log("Main element not found yet.");
   }
 }, 1000); 
 
 
-button.addEventListener("click", () => {
+buttonContainer.addEventListener("click", () => {
     chrome.runtime.sendMessage("OpenPopup")
     chrome.runtime.sendMessage("popup-modal")
 })
