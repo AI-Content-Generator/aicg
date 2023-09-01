@@ -18,6 +18,7 @@ export default function TextInput() {
   const [result, setResult] = useState(initialResult);
   const [logMsg, setlogMsg] = useState("");
   const [isValidated, setIsValidated] = useState(false)
+  const [generatedPromptLanguage, setGeneratedPromptLanguage] = useState("English")
   
   const [waiting, setWaiting] = useState(false);
   const [inputItems, setInputItems] = useState(combinedQuestionsList);
@@ -68,6 +69,11 @@ export default function TextInput() {
     containerElement.removeChild(textField);
   }
 
+  const handleGeneratedPromptLanguageChange = (event) => {
+    const selectedLanguage = event.target.value;
+    setGeneratedPromptLanguage(selectedLanguage);
+  }
+
   // pageAnswer is the input items on each page
   const onPageAnswerUpdate = (step, answersObj) => {
     updateInputItems(answersObj)
@@ -84,7 +90,7 @@ export default function TextInput() {
     let productPrice = processedInputItems['Product Price']
     let productOptions = processedInputItems['Product Options']
     let otherKeywords = processedInputItems['Other Keywords']
-    const query = buildQuery(tone, goal, productName, productDescription, productPrice, productOptions, otherKeywords)
+    const query = buildQuery(tone, goal, productName, productDescription, productPrice, productOptions, otherKeywords, generatedPromptLanguage)
     setResult(query);
   }
 
@@ -187,6 +193,16 @@ export default function TextInput() {
     <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
       <div className="flex justify-between xs:mb-2">
         <h3 className="font-semibold text-gray-500">Text prompt</h3>
+        <select 
+          className="flex dropdown-box" 
+          onChange={handleGeneratedPromptLanguageChange}
+          style={{
+          width: "150px"}}
+        >
+          <option value="" disabled selected>Language</option>
+          <option value="english">English</option>
+          <option value="chinese">Chinese</option>
+        </select>
       </div>
 
       <Container className="flex flex-col gap-4 2xl:w-full">
