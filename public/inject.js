@@ -38,13 +38,21 @@ const pollInterval = setInterval(function() {
 
 buttonContainer.addEventListener("click", () => {
     chrome.runtime.sendMessage("OpenPopup")
-    chrome.runtime.sendMessage("popup-modal")
 })
 
+window.addEventListener('message', function(event) {
+    if (event.data === 'closeModal') {
+        chrome.runtime.sendMessage("closeModal")
+        closeModal();
+    }
+});
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'popup-modal') {
         showModal();
+    }
+    if (message.action === 'close-popup-modal') {
+        closeModal();
     }
 })
 
@@ -76,15 +84,9 @@ const showModal = () => {
         dialog.close();
     });
 }
+
+const closeModal = () => {
+    const dialog = document.querySelector("dialog");
+    dialog.close();
+}
     
-
-// function insertText(text) {
-//       // Access the generated text from the response object
-//   var generatedText = text;
-
-//   var text = document.querySelector("textarea")
-//   text.textContent = "hello world"
-//   text.value = "12312313"
-
-//     // document.getElementById("prompt-textarea").value= text;
-// }

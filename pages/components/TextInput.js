@@ -55,6 +55,11 @@ export default function TextInput() {
     setIsValidated(false);
   }
 
+  const handleClose = () => {
+    window.parent.postMessage('closeModal', '*');
+    window.close();
+  }
+
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(result)
     copyToClipboard(result) // for popup modal to work
@@ -218,12 +223,13 @@ export default function TextInput() {
             <Card>
               <Card.Body>
                 <div className="flex justify-between xs:mb-2">
-                  <p className="font-semibold text-gray-400">Your query have been copied to clipboard!</p>
+                  <p className="font-semibold text-gray-400">Your query has been copied to clipboard!</p>
                 </div>
               </Card.Body>
               <Card.Footer>
                 <div className="flex justify-between xs:mb-2">
-                  <Button className="button right-button" onClick={handleRestart}>Start Over</Button>
+                  <Button className="button left-button" onClick={handleRestart}>Start Over</Button>
+                  <Button id="closeButton" className="button right-button" onClick={handleClose}>Close</Button>
                 </div>
               </Card.Footer>
             </Card> :
