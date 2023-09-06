@@ -8,29 +8,50 @@ buttonContainer.style.color = "white";
 buttonContainer.style.padding = "0.5rem";
 buttonContainer.style.borderRadius = "4px";
 buttonContainer.style.fontSize = "0.875rem";
-buttonContainer.style.minWidth = "100px";
+buttonContainer.style.minWidth = "118px";
+buttonContainer.style.maxHeight = "80px";
 buttonContainer.style.justifyContent = "space-between";
 buttonContainer.style.alignItems = "center";
-buttonContainer.style.margin = "0.4rem";
+buttonContainer.style.margin = "1rem";
 
-function findMainElement(rootNode) {
-  const elements = document.querySelectorAll('header[data-projection-id="2"]');
-
-  if (elements.length > 0) {
-    return elements[elements.length-1]
+const targetSelector = '.relative.flex.h-full.flex-1.items-stretch.md\\:flex-col';
+function findTargetElement(rootNode) {
+  const targetElements = document.querySelectorAll(targetSelector);
+  if (targetElements.length > 0) {
+    return targetElements[0]
   } else {
     return null
   }
 }
 
-var mainElement = null
-// Check every second to see if the DOM has been fully loaded and the mainElement can be found 
+var targetElement = null
+var timeCounter = 0;
+// Check every second to see if the DOM has been fully loaded and the mainElement can be found
 const pollInterval = setInterval(function() {
-  mainElement = findMainElement(document.body);
-  if (mainElement) {
-    clearInterval(pollInterval);
-    mainElement.appendChild(buttonContainer);
+  // If we cannot find the element after 1 minute, we will stop the polling anyways.
+  if (timeCounter >= 60000) {clearInterval(pollInterval);}
+
+  targetElement = findTargetElement(document.body);
+  // The targetElement is not where we want to insert our customized buttonContainer
+  // The actual insertion location is obtained below
+  if (targetElement) {
+    const firstChildElement = targetElement.firstElementChild;
+    if (firstChildElement) {
+      firstChildElement.classList.add('flex')
+      mySiblingElement = firstChildElement.firstElementChild
+      if (mySiblingElement) {
+        firstChildElement.insertBefore(buttonContainer, mySiblingElement)
+      } else {
+        console.log("mySiblingElement not found yet")
+        timeCounter += 1000
+      }
+      clearInterval(pollInterval);
+    } else {
+      console.log("firstChildElement not found yet")
+      timeCounter += 1000
+    }
   } else {
+    timeCounter += 1000
     console.log("Main element not found yet.");
   }
 }, 1000); 
