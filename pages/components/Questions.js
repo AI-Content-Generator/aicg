@@ -75,3 +75,13 @@ export const questions = [
     items: sectionThreeQuestions
   }
 ]
+
+
+export const generatedPromptLanguages = {
+  label: "Language",
+  type: 'language',
+  value: "Language",
+  options: ['English', 'Mandarin', 'Hindi', 'Spanish', 'French', 'Modern Standard Arabic', 'Bengali', 'Russian', 'Portuguese', 'Urdu', 'Indonesian', 'German', 'Japanese'],
+  default: 'English',
+  required: false
+}

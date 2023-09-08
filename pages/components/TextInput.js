@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Editor from "./Editor";
 import { MultiStepForm } from "./MultiStepsForm";
 import { MultiStepsProgressBar } from "./MultiStepsProgressBar";
-import { questions, combinedQuestionsList } from "./Questions";
+import { questions, combinedQuestionsList, generatedPromptLanguages } from "./Questions";
 import { buildQuery } from "../constant/Queries";
 
 export default function TextInput() {
@@ -196,12 +196,15 @@ export default function TextInput() {
         <select 
           className="flex dropdown-box" 
           onChange={handleGeneratedPromptLanguageChange}
+          onBlur={onPageAnswerBlur} 
           style={{
           width: "150px"}}
         >
-          <option value="" disabled selected>Language</option>
-          <option value="english">English</option>
-          <option value="chinese">Chinese</option>
+          {generatedPromptLanguages.options.map((language, index) => (
+            <option key={index} value={language}>
+              {language}
+            </option>
+          ))}
         </select>
       </div>
 
