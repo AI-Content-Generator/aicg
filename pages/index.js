@@ -22,7 +22,7 @@ export default function Home() {
           </div>
         </header>
         <TextInput/>
-        <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://chat.openai.com/" target="_blank" className="underline">AICG</a></p>
+        <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://github.com/AI-Content-Generator" target="_blank" className="underline">AICG</a></p>
       </div>
     </>
   );

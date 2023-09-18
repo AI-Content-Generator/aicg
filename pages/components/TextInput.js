@@ -196,7 +196,7 @@ export default function TextInput() {
   return (
     <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
       <div className="flex justify-between xs:mb-2">
-        <h3 className="font-semibold text-gray-500">Text prompt</h3>
+        <h3 className="font-semibold text-gray-500">Create your prompt</h3>
         <select 
           className="flex dropdown-box" 
           onChange={handleGeneratedPromptLanguageChange}
@@ -225,7 +225,7 @@ export default function TextInput() {
             <Card>
               <Card.Body>
                 <div className="flex justify-between xs:mb-2">
-                  <p className="font-semibold text-gray-400">Your query has been copied to clipboard!</p>
+                  <p className="font-semibold text-gray-400">Your prompt has been copied to clipboard!</p>
                 </div>
               </Card.Body>
               <Card.Footer>
