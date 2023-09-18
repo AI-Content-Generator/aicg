@@ -3,7 +3,7 @@ var buttonContainer = document.createElement("button");
 buttonContainer.textContent = 'AI QuickDraft';
 
 // Apply styles to the button using the style property
-buttonContainer.style.backgroundColor = "#10B981";
+buttonContainer.style.backgroundColor = "#df4683";
 buttonContainer.style.color = "white";
 buttonContainer.style.padding = "0.5rem";
 buttonContainer.style.borderRadius = "4px";
