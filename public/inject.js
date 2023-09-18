@@ -71,11 +71,21 @@ window.addEventListener('message', function(event) {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'popup-modal') {
         showModal();
-    }
+    }   
+
+    // https://stackoverflow.com/questions/54126343/how-to-fix-unchecked-runtime-lasterror-the-message-port-closed-before-a-respon
+    setTimeout(function() {
+        sendResponse({status: true});
+      }, 1);
+    return true;  // uncomment this line to fix error
+})
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'close-popup-modal') {
         closeModal();
     }
 })
+
 
 const showModal = () => {
     const modal = document.createElement("dialog");

@@ -7,7 +7,7 @@ import { questions, combinedQuestionsList, generatedPromptLanguages } from "./Qu
 import { buildQuery } from "../constant/Queries";
 
 export default function TextInput() {
-  const initialResult = "Your input prompt will be shown here. Once confirmed, click 'Submit'"
+  const initialResult = "Your input prompt will be shown here."
   const totalPagesCount = questions?.length || 0;
 
   const [step, setStep] = useState(1);
@@ -61,7 +61,6 @@ export default function TextInput() {
   }
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(result)
     copyToClipboard(result) // for popup modal to work
   }
 
