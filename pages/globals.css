@@ -248,10 +248,10 @@ label {
 }
 /* Editor - the Output Box */
 .output-container {
-    min-width: 200px;
-    min-height: 100px;
-    max-width: 400px;
-    max-height: 200px;
+    min-width: 100%;
+    min-height: 90%;
+    max-width: 100%;
+    max-height: 90%;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -265,13 +265,13 @@ label {
 }
 
 .output-text-read-only {
-    font-size: 16px;
+    font-size: 12px;
     padding: 0.5rem;
     color: #6b7280;
 }
 
 .output-text-can-edit {
-    font-size: 16px;
+    font-size: 12px;
     padding: 0.5rem;
     color: black;
 }

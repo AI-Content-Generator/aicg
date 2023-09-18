@@ -3,11 +3,15 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Editor from "./Editor";
 import { MultiStepForm } from "./MultiStepsForm";
 import { MultiStepsProgressBar } from "./MultiStepsProgressBar";
-import { questions, combinedQuestionsList } from "./Questions";
+import { questions, combinedQuestionsList, generatedPromptLanguages } from "./Questions";
 import { buildQuery } from "../constant/Queries";
 
 export default function TextInput() {
+<<<<<<< HEAD
   const initialResult = "Your input prompt will be shown here. Once confirmed, click 'Submit'"
+=======
+  const initialResult = "Your input prompt will be shown here."
+>>>>>>> plugin
   const totalPagesCount = questions?.length || 0;
 
   const [step, setStep] = useState(1);
@@ -40,7 +44,8 @@ export default function TextInput() {
       setStep(prevIndex => prevIndex + 1);
     } else {
       // clear the form on submit
-      submitInputItems()
+      // Used to be: submitInputItems(). No longer submitting for plugin use case.
+      handleCopyToClipboard();
       setPagesAnswers({});
       setInputItems(combinedQuestionsList)
       setSubmitted(true);
@@ -52,6 +57,24 @@ export default function TextInput() {
     setSubmitted(false);
     setResult(initialResult)
     setIsValidated(false);
+  }
+
+  const handleClose = () => {
+    window.parent.postMessage('closeModal', '*');
+    window.close();
+  }
+
+  const handleCopyToClipboard = () => {
+    copyToClipboard(result) // for popup modal to work
+  }
+
+  const copyToClipboard = (textToCopy, containerElement = document.body) => {    
+    const textField = document.createElement('textarea');            
+    textField.value = textToCopy;
+    containerElement.appendChild(textField);
+    textField.select();
+    document.execCommand('copy'); 
+    containerElement.removeChild(textField);
   }
 
   const handleGeneratedPromptLanguageChange = (event) => {
@@ -175,22 +198,25 @@ export default function TextInput() {
   
 
   return (
-    <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
+    <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
       <div className="flex justify-between xs:mb-2">
-        <h3 className="font-semibold text-gray-500">Text prompt</h3>
+        <h3 className="font-semibold text-gray-500">Create your prompt</h3>
         <select 
           className="flex dropdown-box" 
           onChange={handleGeneratedPromptLanguageChange}
+          onBlur={onPageAnswerBlur} 
           style={{
           width: "150px"}}
         >
-          <option value="" disabled selected>Language</option>
-          <option value="english">English</option>
-          <option value="chinese">Chinese</option>
+          {generatedPromptLanguages.options.map((language, index) => (
+            <option key={index} value={language}>
+              {language}
+            </option>
+          ))}
         </select>
       </div>
 
-      <Container className="h-100 w-full">
+      <Container className="flex flex-col gap-4 2xl:w-full">
         <Row className="m-5">
           <Col className="align-self-center">
             <MultiStepsProgressBar step={step}/>
@@ -203,12 +229,13 @@ export default function TextInput() {
             <Card>
               <Card.Body>
                 <div className="flex justify-between xs:mb-2">
-                  <p className="font-semibold text-gray-400">Your inputs have been submitted!</p>
+                  <p className="font-semibold text-gray-400">Your prompt has been copied to clipboard!</p>
                 </div>
               </Card.Body>
               <Card.Footer>
                 <div className="flex justify-between xs:mb-2">
-                  <Button className="button right-button" onClick={handleRestart}>Start Over</Button>
+                  <Button className="button left-button" onClick={handleRestart}>Start Over</Button>
+                  <Button id="closeButton" className="button right-button" onClick={handleClose}>Close</Button>
                 </div>
               </Card.Footer>
             </Card> :
@@ -223,10 +250,10 @@ export default function TextInput() {
                 checkIsValidated={checkIsValidated}
               />
             </Card.Body>
-            <Card.Footer className="button-container d-flex justify-content-between">
-              <Button className={`button left-button ${step > 1 ? "" : "button-grey"}`} onClick={prevButton} disabled={step == 1}>Previous</Button>
-              <Button className={`button right-button ${isValidated ? "" : "button-grey"}`} onClick={nextButton} disabled={!isValidated}>
-                {step == totalPagesCount ? 'Submit' : 'Next'}
+            <Card.Footer className="button-container d-flex justify-content-between flex 2xl:w-full">
+            <Button className={`button left-button ${step > 1 ? "" : "button-grey"}`} onClick={prevButton} disabled={step == 1}>Previous</Button>
+              <Button className={`button right-button ${isValidated ? "" : "button-grey"}`} onClick={nextButton}>
+                {step == totalPagesCount ? 'Copy to Clipboard' : 'Next'}
               </Button>
             </Card.Footer>
           </Card>

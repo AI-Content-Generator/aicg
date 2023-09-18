@@ -24,7 +24,7 @@ export const FormItem =  ({ item, onChange, onBlur, answer, isRequiredError})  =
           <FormGroup key={item.label} className="form-container">
             <Form.Label 
                 className="block text-sm font-medium leading-6 text-gray-900">
-                    {item.label}
+                    {item.required? item.label + " *" : item.label}
             </Form.Label>
             <Form.Control
               className="input-box"
@@ -47,7 +47,7 @@ export const FormItem =  ({ item, onChange, onBlur, answer, isRequiredError})  =
             <Form.Label 
                 className="block text-sm font-medium leading-6 text-gray-900" 
                 htmlFor="inputPassword5">
-                    {item.label}
+                    {item.required? item.label + " *" : item.label}
             </Form.Label>
             <Form.Select 
                 className="dropdown-box"

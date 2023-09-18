@@ -2,26 +2,26 @@ export default function Question() {}
 
 export const sectionOneQuestions = [
   {
-    label: 'Product Name *',
+    label: 'Product Name',
     type: 'text',
     value: 'Product Name',
     required: true
   },
   {
-    label: 'Product Description *',
+    label: 'Product Description',
     type: 'text',
     value: 'Product Description',
     required: true
   },
   {
-    label: 'Tone *',
+    label: 'Tone',
     type: 'select',
     value: 'Tone',
     options: [ 'friendly', 'uplifting', 'funny', 'witty', 'straightforward', 'humble', 'casual', 'formal', 'inspiring'],
     required: true
   },
   {
-    label: 'Goal *',
+    label: 'Goal',
     type: 'select',
     value: 'Goal',
     options: [ '30 Characters Headline', '90 Characters Description', '125 Characters Description'],
@@ -52,9 +52,9 @@ export const sectionTwoQuestions = [
 
 export const sectionThreeQuestions = [
   {
-    label: "If you are ready to submit please press 'Submit'!",
+    label: "Review your query and press 'Copy to Clipboard'!",
     type: 'information',
-    value: "If you are ready to submit please press 'Submit'!",
+    value: "Review your query and press 'Copy to Clipboard'!",
     required: false
   }
 ]
@@ -75,3 +75,13 @@ export const questions = [
     items: sectionThreeQuestions
   }
 ]
+
+
+export const generatedPromptLanguages = {
+  label: "Language",
+  type: 'language',
+  value: "Language",
+  options: ['English', 'Mandarin', 'Hindi', 'Spanish', 'French', 'Modern Standard Arabic', 'Bengali', 'Russian', 'Portuguese', 'Urdu', 'Indonesian', 'German', 'Japanese'],
+  default: 'English',
+  required: false
+}
