@@ -1,6 +1,6 @@
 // Create the buttonContainer element and set its text content
 var buttonContainer = document.createElement("button");
-buttonContainer.textContent = 'AI QuickDraft';
+buttonContainer.textContent = 'Pitaya Prompt Templates';
 
 // Apply styles to the button using the style property
 buttonContainer.style.backgroundColor = "#df4683";
