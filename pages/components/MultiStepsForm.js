@@ -54,7 +54,7 @@ export const MultiStepForm = (props) => {
   }
 
   return (
-    <div className="text-left overflow-scroll rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
+    <div className="text-left overflow-scroll rounded-md border border-gray-100 shadow-md shadow-red-600/30 bg-white p-3">
       {
         props.list[props.step - 1].items?.map((item, step) => {
           return (

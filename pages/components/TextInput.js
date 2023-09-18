@@ -195,7 +195,7 @@ export default function TextInput() {
   
 
   return (
-    <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
+    <div className="rounded-md border border-gray-100 shadow-md shadow-red-600/30 bg-white p-3 flex flex-col gap-4 2xl:w-full">
       <div className="flex justify-between xs:mb-2">
         <h3 className="font-semibold text-gray-500">Text prompt</h3>
         <select 

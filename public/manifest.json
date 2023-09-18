@@ -1,6 +1,6 @@
 {
-    "name": "AICG",
-    "description": "The power of React and TypeScript for building interactive Chrome extensions",
+    "name": "Pitaya",
+    "description": "An AI powered content generator",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
