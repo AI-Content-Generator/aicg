@@ -53,6 +53,7 @@ export default function TextInput() {
     setSubmitted(false);
     setResult(initialResult)
     setIsValidated(false);
+    setGeneratedPromptLanguage("English")
   }
 
   const handleClose = () => {
@@ -201,6 +202,7 @@ export default function TextInput() {
           className="flex dropdown-box" 
           onChange={handleGeneratedPromptLanguageChange}
           onBlur={onPageAnswerBlur} 
+          value={generatedPromptLanguage}
           style={{
           width: "150px"}}
         >

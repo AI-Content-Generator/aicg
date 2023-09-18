@@ -102,7 +102,7 @@ const showModal = () => {
     );
     modal.innerHTML = `<iframe id="popup-content"; style="height:100%; width:100%"></iframe>
         <div style="position:absolute; top:0px; left:5px;">
-        <button style="padding: 8px 12px; font-size: 16px; border: none; border-radius: 20px;">x</button>
+        <button style="padding: 8px 12px; font-size: 18px; border: none; border-radius: 20px; background-color:grey">x</button>
         </div>`;
     document.body.appendChild(modal);
 
