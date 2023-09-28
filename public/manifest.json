@@ -23,8 +23,7 @@
     },
     "web_accessible_resources": [{
       "resources": ["inject.js","background.js", "components/**.html", "out/**.html", "*.html", "index.html"],
-      "matches": ["<all_urls>"],
-      "extension_ids": []
+      "matches": ["<all_urls>"]
      }],
      "content_security_policy": {
       "extension_pages": "script-src 'self'; object-src 'self'"
