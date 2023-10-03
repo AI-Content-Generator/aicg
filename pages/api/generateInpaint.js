@@ -1,6 +1,6 @@
 
 export default async function (req, res) {
-  const stableDiffusionURL = "https://stablediffusionapi.com/api/v3/inpaint"
+  const stableDiffusionURL = ""
   const prompt = req.body.prompt || '';
   const promptType = req.body.promptType
   const promptTone = req.body.promptTone

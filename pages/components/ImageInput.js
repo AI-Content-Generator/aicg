@@ -71,7 +71,7 @@ export default function ImageInput() {
       var output = match ? match[1] : "";
       if (output.length == 0) {
         // TODO: temporary redirect to a hardcode url for testing purposes
-        output = "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/980343f9-512d-40ea-8f1c-377b04eebec2-0.png"
+        output = ""
       }
       setImageResult(output);
       setWaiting(false);
