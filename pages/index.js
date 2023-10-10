@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>Pitaya</title>
         <meta name="description" content="Turn text into content using GPT" />
-        <link rel="icon" href="/gpt-p5.svg" />
+        <link rel="icon" href="/gpt-p5-emerald.svg" />
       </Head>
       <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px] relative 2xl:max-w-7xl">
         <header className="flex gap-3 justify-between">
